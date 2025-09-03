@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Qodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Qodes">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Qodes">
+<meta property="og:locale">
+<meta property="article:author" content="Code Qiu">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Qodes" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Qodes</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-git配置托管平台" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" class="article-date">
+  <time class="dt-published" datetime="2025-09-02T16:06:26.000Z" itemprop="datePublished">2025-09-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">git配置托管平台</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>配置git的远程仓库，常用ssh的方式，这样安全又便捷，省去输入密码的过程</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="一、检查是否已安装-Git"><a href="#一、检查是否已安装-Git" class="headerlink" title="一、检查是否已安装 Git"></a>一、检查是否已安装 Git</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>如果没有安装，可以去 <a target="_blank" rel="noopener" href="https://git-scm.com/?utm_source=chatgpt.com">Git 官网</a> 下载并安装。</p>
+<hr>
+<h3 id="二、生成-SSH-Key"><a href="#二、生成-SSH-Key" class="headerlink" title="二、生成 SSH Key"></a>二、生成 SSH Key</h3><ol>
+<li><p>打开终端(cmd)，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;注释内容&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不支持 <code>ed25519</code>，可以用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;比如gitee ssh key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以指定文件夹路径：-f ~&#x2F;.ssh&#x2F;gitee&#x2F;id_ed25519</p>
+</li>
+<li><p>系统会提示保存路径，建议：</p>
+<ul>
+<li>GitHub 用：<code>~/.ssh/id_rsa_github</code></li>
+<li>Gitee 用：<code>~/.ssh/id_rsa_gitee</code><br> 这样可以区分不同平台。<br> 按提示一路回车，或自己设置密码。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>这个生成的命令在,C:\Users\用户\.ssh ,可以创建文件夹存放不同ssh的key</p>
+</blockquote>
+<hr>
+<h3 id="三、配置-SSH"><a href="#三、配置-SSH" class="headerlink" title="三、配置 SSH"></a>三、配置 SSH</h3><p>编辑 SSH 配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config</span><br></pre></td></tr></table></figure>
+
+<p>写入以下内容（没有 <code>config</code> 文件就新建一个）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># GitHub</span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/github/id_rsa_github</span><br><span class="line"></span><br><span class="line"># Gitee</span><br><span class="line">Host gitee.com</span><br><span class="line">  HostName gitee.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/gitee/id_rsa_gitee</span><br></pre></td></tr></table></figure>
+
+<p>保存退出。这样就能让 SSH 根据不同域名使用不同的 key。</p>
+<hr>
+<h2 id="四、添加公钥到-GitHub-和-Gitee"><a href="#四、添加公钥到-GitHub-和-Gitee" class="headerlink" title="四、添加公钥到 GitHub 和 Gitee"></a>四、添加公钥到 GitHub 和 Gitee</h2><ol>
+<li><p>查看公钥内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa_github.pub</span><br><span class="line">cat ~/.ssh/id_rsa_gitee.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制后，分别到：</p>
+<ul>
+<li><strong>GitHub</strong> → <code>Settings</code> → <code>SSH and GPG keys</code> → <code>New SSH key</code></li>
+<li><strong>Gitee</strong> → <code>设置</code> → <code>SSH公钥</code> → <code>添加公钥</code></li>
+</ul>
+</li>
+</ol>
+<p>粘贴进去保存。</p>
+<hr>
+<h2 id="五、测试连接"><a href="#五、测试连接" class="headerlink" title="五、测试连接"></a>五、测试连接</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@gitee.com</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会提示：</p>
+<ul>
+<li>GitHub: <code>Hi username! You&#39;ve successfully authenticated</code></li>
+<li>Gitee: <code>Welcome to Gitee.com</code></li>
+</ul>
+<hr>
+<h2 id="六、配置本地仓库同时推送到-GitHub-和-Gitee"><a href="#六、配置本地仓库同时推送到-GitHub-和-Gitee" class="headerlink" title="六、配置本地仓库同时推送到 GitHub 和 Gitee"></a>六、配置本地仓库同时推送到 GitHub 和 Gitee</h2><p>进入你的项目目录，添加远程仓库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 添加 GitHub 远程</span><br><span class="line">git remote add github git@github.com:username/repo.git</span><br><span class="line"></span><br><span class="line"># 添加 Gitee 远程</span><br><span class="line">git remote add gitee git@gitee.com:username/repo.git</span><br></pre></td></tr></table></figure>
+
+<p>查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>结果应该能看到两个 remote。</p>
+<hr>
+<h2 id="七、推送代码到两个仓库"><a href="#七、推送代码到两个仓库" class="headerlink" title="七、推送代码到两个仓库"></a>七、推送代码到两个仓库</h2><h3 id="方法1：分别推送"><a href="#方法1：分别推送" class="headerlink" title="方法1：分别推送"></a>方法1：分别推送</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push github main</span><br><span class="line">git push gitee main</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法2：一个命令推送到多个仓库"><a href="#方法2：一个命令推送到多个仓库" class="headerlink" title="方法2：一个命令推送到多个仓库"></a>方法2：一个命令推送到多个仓库</h3><p>修改 <code>.git/config</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;all&quot;]</span><br><span class="line">    url = git@github.com:username/repo.git</span><br><span class="line">    url = git@gitee.com:username/repo.git</span><br><span class="line">    fetch = +refs/heads/*:refs/remotes/all/*</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push all main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>✅ 至此，你已经完成了 Git 配置 SSH 到 Gitee 和 GitHub 的全流程。</p>
+<h2 id="修改远程仓库"><a href="#修改远程仓库" class="headerlink" title="修改远程仓库"></a>修改远程仓库</h2><h3 id="1-查看当前远程仓库"><a href="#1-查看当前远程仓库" class="headerlink" title="1. 查看当前远程仓库"></a>1. 查看当前远程仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>你会看到类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">origin  git@gitee.com:QGS_Code/storage.git (fetch)</span><br><span class="line">origin  git@gitee.com:QGS_Code/storage.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>说明 <code>origin</code> 已经指向了 <strong>Gitee</strong>。</p>
+<hr>
+<h3 id="2-解决方法"><a href="#2-解决方法" class="headerlink" title="2. 解决方法"></a>2. 解决方法</h3><h4 id="方法-A：修改已有的-origin"><a href="#方法-A：修改已有的-origin" class="headerlink" title="方法 A：修改已有的 origin"></a>方法 A：修改已有的 <code>origin</code></h4><p>如果你希望 <code>origin</code> 代表 GitHub，可以直接修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin git@github.com:CodeQiu88/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后再添加 Gitee 作为另一个远程，比如叫 <code>gitee</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add gitee git@gitee.com:QGS_Code/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>这样：</p>
+<ul>
+<li><code>origin</code> → GitHub</li>
+<li><code>gitee</code> → Gitee</li>
+</ul>
+<p>推送时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin main</span><br><span class="line">git push gitee main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="方法-B：保留-origin-给-Gitee，新加-GitHub"><a href="#方法-B：保留-origin-给-Gitee，新加-GitHub" class="headerlink" title="方法 B：保留 origin 给 Gitee，新加 GitHub"></a>方法 B：保留 <code>origin</code> 给 Gitee，新加 GitHub</h4><p>如果你想 <code>origin</code> 还是 Gitee 的，就给 GitHub 起一个别名，比如 <code>github</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add github git@github.com:CodeQiu88/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后推送：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin main   # 推送到 Gitee</span><br><span class="line">git push github main   # 推送到 GitHub</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="方法-C：一个命令推送到两个远程"><a href="#方法-C：一个命令推送到两个远程" class="headerlink" title="方法 C：一个命令推送到两个远程"></a>方法 C：一个命令推送到两个远程</h4><p>修改 <code>.git/config</code>，加一个 <code>remote &quot;all&quot;</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;all&quot;]</span><br><span class="line">    url = git@github.com:CodeQiu88/storage.git</span><br><span class="line">    url = git@gitee.com:QGS_Code/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后你就可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push all main</span><br></pre></td></tr></table></figure>
+
+<p>一次性推送到 GitHub 和 Gitee。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" data-id="cmf3omqs2000148vu7u989tp0" data-title="git配置托管平台" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ssh" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/02/ssh/" class="article-date">
+  <time class="dt-published" datetime="2025-09-02T15:21:30.000Z" itemprop="datePublished">2025-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/02/ssh/">ssh</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="github配置ssh连接"><a href="#github配置ssh连接" class="headerlink" title="github配置ssh连接"></a>github配置ssh连接</h2><p>好问题 👍</p>
+<p>你刚刚发出来的是这种格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEW3VSMBsfx1EVYQ2/4rjDk/c87WaCiiHh4r7vLfQMCU 戴尔@DESKTOP-SUBO2BS</span><br></pre></td></tr></table></figure>
+
+<p>这是 <strong>Ed25519 类型</strong>的公钥，而不是 RSA。</p>
+<hr>
+<h3 id="1️⃣-区别在哪？"><a href="#1️⃣-区别在哪？" class="headerlink" title="1️⃣ 区别在哪？"></a>1️⃣ 区别在哪？</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>RSA (<code>ssh-keygen -t rsa -b 4096</code>)</th>
+<th>Ed25519 (<code>ssh-keygen -t ed25519</code>)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>算法</strong></td>
+<td>基于 RSA（大整数分解）</td>
+<td>基于椭圆曲线加密（Curve25519）</td>
+</tr>
+<tr>
+<td><strong>密钥长度</strong></td>
+<td>通常 2048&#x2F;4096 位</td>
+<td>固定长度，简短</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>4096 位才算足够安全</td>
+<td>默认就很安全（现代推荐）</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>密钥长，验证速度稍慢</td>
+<td>计算快，签名小</td>
+</tr>
+<tr>
+<td><strong>兼容性</strong></td>
+<td>最老牌，几乎所有地方都支持</td>
+<td>新标准，现代系统都支持（GitHub 推荐）</td>
+</tr>
+</tbody></table>
+<p>👉 简单说：</p>
+<ul>
+<li>RSA 更“传统”，兼容性最好。</li>
+<li>Ed25519 更现代，密钥短、安全、速度快，<strong>GitHub 官方推荐使用 Ed25519</strong>。</li>
+</ul>
+<hr>
+<h3 id="2️⃣-你刚刚发的公钥是怎么生成的？"><a href="#2️⃣-你刚刚发的公钥是怎么生成的？" class="headerlink" title="2️⃣ 你刚刚发的公钥是怎么生成的？"></a>2️⃣ 你刚刚发的公钥是怎么生成的？</h3><p>既然是 <code>ssh-ed25519</code> 开头，那就是通过命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C &quot;你的邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成的。</p>
+<p>命令参数解释：</p>
+<ul>
+<li><code>-t ed25519</code> → 指定算法是 Ed25519。</li>
+<li><code>-C &quot;你的邮箱&quot;</code> → 只是注释（comment），方便识别。你发的 <code>戴尔@DESKTOP-SUBO2BS</code> 是因为当时你没加邮箱，ssh-keygen 默认就用了 <strong>用户名@主机名</strong> 来当注释。</li>
+</ul>
+<hr>
+<h3 id="3️⃣-结论"><a href="#3️⃣-结论" class="headerlink" title="3️⃣ 结论"></a>3️⃣ 结论</h3><ul>
+<li><code>ssh-keygen -t rsa -b 4096 -C &quot;xxx@email.com&quot;</code> → 生成 <strong>RSA 4096 位</strong>的密钥。</li>
+<li><code>ssh-keygen -t ed25519 -C &quot;xxx@email.com&quot;</code> → 生成 <strong>Ed25519</strong>的密钥（更推荐）。</li>
+<li>你发出来的那个就是 <strong>通过 Ed25519 命令生成的</strong>。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/02/ssh/" data-id="cmf3omqs7000348vugyl6attn" data-title="ssh" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-部署到服务器或其他托管平台" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" class="article-date">
+  <time class="dt-published" datetime="2025-09-01T18:13:08.000Z" itemprop="datePublished">2025-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">部署到服务器或其他托管平台</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过Hexo可以快速生成html,我们只需要将其进行部署就可以完成上线，常见的2种方案</p>
+<ul>
+<li>自己的服务器</li>
+<li>可部署静态网页的免费服务器（GitHub、gitee、cf）</li>
+</ul>
+<p>无论使用那种方案，将文章进行部署才是关键，而每次新增文章不可能都全部上传到服务器，因此使用git进行增量上传是一个很好的选择</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" data-id="cmf3omqse000948vuc0z1hxe3" data-title="部署到服务器或其他托管平台" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-我的第一篇文章" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" class="article-date">
+  <time class="dt-published" datetime="2025-09-01T17:35:33.000Z" itemprop="datePublished">2025-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">我的第一篇文章</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="在node环境下搭建Hexo"><a href="#在node环境下搭建Hexo" class="headerlink" title="在node环境下搭建Hexo"></a>在node环境下搭建Hexo</h1><h3 id="下载node-js"><a href="#下载node-js" class="headerlink" title="下载node.js"></a>下载node.js</h3><p>自行搜索教程</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><ul>
+<li>安装命令（全局安装的 npm 包）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置环境变量，这样任何文件都可以访问hexo命令</li>
+</ul>
+<p>在path中添加hexo命令的地址，获取地址命令如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm root -g</span><br></pre></td></tr></table></figure>
+
+<p>然后去到上一级目录的 <code>bin</code>（或 <code>.../npm</code>）看看有没有 <code>hexo.cmd</code>，常见地址如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\&lt;你的用户名&gt;\AppData\Roaming\npm</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至此，hexo安装完成！</p>
+</blockquote>
+<h3 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h3><h4 id="1）初始化一个新博客"><a href="#1）初始化一个新博客" class="headerlink" title="(1）初始化一个新博客"></a>(1）初始化一个新博客</h4><p>在你想建站的目录执行(或目标文件夹直接init)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure>
+
+<p>这会生成一个名为 <code>blog</code> 的文件夹，里面是 Hexo 的目录结构。</p>
+<h4 id="2）进入目录并安装依赖"><a href="#2）进入目录并安装依赖" class="headerlink" title="(2）进入目录并安装依赖"></a>(2）进入目录并安装依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h4 id="3）生成静态页面"><a href="#3）生成静态页面" class="headerlink" title="(3）生成静态页面"></a>(3）生成静态页面</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line"># 或者缩写</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<h4 id="4）本地启动预览"><a href="#4）本地启动预览" class="headerlink" title="(4）本地启动预览"></a>(4）本地启动预览</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br><span class="line"># 或者缩写</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>然后在浏览器打开：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:4000</span><br></pre></td></tr></table></figure>
+
+<h4 id="5）写文章"><a href="#5）写文章" class="headerlink" title="(5）写文章"></a>(5）写文章</h4><p>进入 <code>source/_posts</code> 目录，新建一个 Markdown 文件，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure>
+
+<p>会生成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source/_posts/我的第一篇文章.md</span><br></pre></td></tr></table></figure>
+
+<p>然后用你喜欢的编辑器写内容。</p>
+<h4 id="6）部署到远程（可选）"><a href="#6）部署到远程（可选）" class="headerlink" title="(6）部署到远程（可选）"></a>(6）部署到远程（可选）</h4><p>如果要发布到 GitHub Pages 或服务器，需要在 <code>_config.yml</code> 里配置部署方式，然后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br><span class="line"># 或者缩写</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>✅ 总结：</p>
+<ul>
+<li><strong>环境变量</strong>：让 <code>hexo</code> 命令在任何终端都能用，避免报 <code>command not found</code>。</li>
+<li><strong>操作 Hexo</strong>：基本流程是<br> <code>init → install → g → s → new post → d</code>。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" data-id="cmf3omqsd000848vu600s4rlz" data-title="我的第一篇文章" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/02/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2025-09-01T17:32:47.156Z" itemprop="datePublished">2025-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/02/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/02/hello-world/" data-id="cmf3omqsb000648vugoi1428s" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">git配置托管平台</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/ssh/">ssh</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">部署到服务器或其他托管平台</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">我的第一篇文章</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 Code Qiu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ssh | Qodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="github配置ssh连接好问题 👍 你刚刚发出来的是这种格式： 1ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEW3VSMBsfx1EVYQ2&#x2F;4rjDk&#x2F;c87WaCiiHh4r7vLfQMCU 戴尔@DESKTOP-SUBO2BS  这是 Ed25519 类型的公钥，而不是 RSA。  1️⃣ 区别在哪？   特性 RSA (ssh-keygen -t rsa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssh">
+<meta property="og:url" content="http://example.com/2025/09/02/ssh/index.html">
+<meta property="og:site_name" content="Qodes">
+<meta property="og:description" content="github配置ssh连接好问题 👍 你刚刚发出来的是这种格式： 1ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEW3VSMBsfx1EVYQ2&#x2F;4rjDk&#x2F;c87WaCiiHh4r7vLfQMCU 戴尔@DESKTOP-SUBO2BS  这是 Ed25519 类型的公钥，而不是 RSA。  1️⃣ 区别在哪？   特性 RSA (ssh-keygen -t rsa">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-09-02T15:21:30.000Z">
+<meta property="article:modified_time" content="2025-09-02T15:23:14.038Z">
+<meta property="article:author" content="Code Qiu">
+<meta property="article:tag" content="ssh">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Qodes" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Qodes</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ssh" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/02/ssh/" class="article-date">
+  <time class="dt-published" datetime="2025-09-02T15:21:30.000Z" itemprop="datePublished">2025-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      ssh
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="github配置ssh连接"><a href="#github配置ssh连接" class="headerlink" title="github配置ssh连接"></a>github配置ssh连接</h2><p>好问题 👍</p>
+<p>你刚刚发出来的是这种格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEW3VSMBsfx1EVYQ2/4rjDk/c87WaCiiHh4r7vLfQMCU 戴尔@DESKTOP-SUBO2BS</span><br></pre></td></tr></table></figure>
+
+<p>这是 <strong>Ed25519 类型</strong>的公钥，而不是 RSA。</p>
+<hr>
+<h3 id="1️⃣-区别在哪？"><a href="#1️⃣-区别在哪？" class="headerlink" title="1️⃣ 区别在哪？"></a>1️⃣ 区别在哪？</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>RSA (<code>ssh-keygen -t rsa -b 4096</code>)</th>
+<th>Ed25519 (<code>ssh-keygen -t ed25519</code>)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>算法</strong></td>
+<td>基于 RSA（大整数分解）</td>
+<td>基于椭圆曲线加密（Curve25519）</td>
+</tr>
+<tr>
+<td><strong>密钥长度</strong></td>
+<td>通常 2048&#x2F;4096 位</td>
+<td>固定长度，简短</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>4096 位才算足够安全</td>
+<td>默认就很安全（现代推荐）</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>密钥长，验证速度稍慢</td>
+<td>计算快，签名小</td>
+</tr>
+<tr>
+<td><strong>兼容性</strong></td>
+<td>最老牌，几乎所有地方都支持</td>
+<td>新标准，现代系统都支持（GitHub 推荐）</td>
+</tr>
+</tbody></table>
+<p>👉 简单说：</p>
+<ul>
+<li>RSA 更“传统”，兼容性最好。</li>
+<li>Ed25519 更现代，密钥短、安全、速度快，<strong>GitHub 官方推荐使用 Ed25519</strong>。</li>
+</ul>
+<hr>
+<h3 id="2️⃣-你刚刚发的公钥是怎么生成的？"><a href="#2️⃣-你刚刚发的公钥是怎么生成的？" class="headerlink" title="2️⃣ 你刚刚发的公钥是怎么生成的？"></a>2️⃣ 你刚刚发的公钥是怎么生成的？</h3><p>既然是 <code>ssh-ed25519</code> 开头，那就是通过命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C &quot;你的邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成的。</p>
+<p>命令参数解释：</p>
+<ul>
+<li><code>-t ed25519</code> → 指定算法是 Ed25519。</li>
+<li><code>-C &quot;你的邮箱&quot;</code> → 只是注释（comment），方便识别。你发的 <code>戴尔@DESKTOP-SUBO2BS</code> 是因为当时你没加邮箱，ssh-keygen 默认就用了 <strong>用户名@主机名</strong> 来当注释。</li>
+</ul>
+<hr>
+<h3 id="3️⃣-结论"><a href="#3️⃣-结论" class="headerlink" title="3️⃣ 结论"></a>3️⃣ 结论</h3><ul>
+<li><code>ssh-keygen -t rsa -b 4096 -C &quot;xxx@email.com&quot;</code> → 生成 <strong>RSA 4096 位</strong>的密钥。</li>
+<li><code>ssh-keygen -t ed25519 -C &quot;xxx@email.com&quot;</code> → 生成 <strong>Ed25519</strong>的密钥（更推荐）。</li>
+<li>你发出来的那个就是 <strong>通过 Ed25519 命令生成的</strong>。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/02/ssh/" data-id="cmf3omqs7000348vugyl6attn" data-title="ssh" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          git配置托管平台
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">部署到服务器或其他托管平台</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">git配置托管平台</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/ssh/">ssh</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/">部署到服务器或其他托管平台</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">我的第一篇文章</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/02/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 Code Qiu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
