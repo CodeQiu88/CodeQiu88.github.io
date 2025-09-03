@@ -1,45 +1,709 @@
-extends includes/layout.pug
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>git配置托管平台 | Hexo</title>
+  <meta name="description" content="前言配置git的远程仓库，常用ssh的方式，这样安全又便捷，省去输入密码的过程 操作一、检查是否已安装 Git1git --version  如果没有安装，可以去 Git 官网 下载并安装。  二、生成 SSH Key 打开终端(cmd)，输入： 1ssh-keygen -t ed25519 -C &quot;注释内容&quot;  如果不支持 ed25519，可以用： 1ssh-keygen -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git配置托管平台">
+<meta property="og:url" content="http://example.com/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="Qodes">
+<meta property="og:description" content="前言配置git的远程仓库，常用ssh的方式，这样安全又便捷，省去输入密码的过程 操作一、检查是否已安装 Git1git --version  如果没有安装，可以去 Git 官网 下载并安装。  二、生成 SSH Key 打开终端(cmd)，输入： 1ssh-keygen -t ed25519 -C &quot;注释内容&quot;  如果不支持 ed25519，可以用： 1ssh-keygen -">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-02T16:06:26.000Z">
+<meta property="article:modified_time" content="2025-09-03T07:14:12.479Z">
+<meta property="article:author" content="Code Qiu">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Qodes" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-block content
-  #post
-    if top_img === false || page.bilibili_bg
-      include includes/header/post-info.pug
-    if theme.post_head_ai_description
-      include includes/anzhiyu/ai-info.pug
-    - let url = page.copyright_url || page.permalink
-    article#article-container.post-content(itemscope itemtype=url_for(url))
-      header
-        if (theme.post_meta.post.categories && page.categories && page.categories.data.length > 0)
-          each item, index in page.categories.data
-            a(href=url_for(item.path) itemprop="url").post-meta-categories #[=item.name]
-        if (theme.post_meta.page.tags)
-          each item, index in page.tags.data
-            a(href=url_for(item.path) tabindex="-1" itemprop="url")=item.name
-        h1#CrawlerTitle(itemprop="name headline")= page.title || _p('no_title')
-        - let author = page.copyright_author || config.author
-        span(itemprop="author" itemscope itemtype="http://schema.org/Person")=author
-        if (theme.post_meta.post.date_type)
-          if (theme.post_meta.post.date_type === 'both')
-            time(itemprop="dateCreated datePublished" datetime=date_xml(page.date) title=_p('post.created') + ' ' + full_date(page.date))=date(page.date, config.date_format)
-            time(itemprop="dateCreated datePublished" datetime=date_xml(page.updated) title=_p('post.updated') + ' ' + full_date(page.updated))=date(page.updated, config.date_format)
-          else
-            - let data_type_update = theme.post_meta.post.date_type === 'updated'
-            - let date_type = data_type_update ? 'updated' : 'date'
-            time(itemprop="dateCreated datePublished" datetime=date_xml(page[date_type]) title=date_title + ' ' + full_date(page[date_type]))=date(page[date_type], config.date_format)
-      !=page.content
+  
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
 
-    include includes/post/post-copyright.pug
 
-    //- ad
-    if theme.ad && theme.ad.post
-      .ads-wrap!=theme.ad.post
-
-    if theme.post_pagination
-      include includes/pagination.pug
-    if theme.related_post && theme.related_post.enable
-      != related_posts(page,site.posts)
-
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
       
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/blog/" style="font-size: 13px;">blog</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/ssh/" style="font-size: 13px;">ssh</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" class="title">git配置托管平台</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-09-02T16:06:26.000Z" itemprop="datePublished">2025-09-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2025/09/02/ssh/" class="title">ssh</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-09-02T15:21:30.000Z" itemprop="datePublished">2025-09-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2025/09/02/%E9%83%A8%E7%BD%B2%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%96%E5%85%B6%E4%BB%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" class="title">部署到服务器或其他托管平台</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-09-01T18:13:08.000Z" itemprop="datePublished">2025-09-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2025/09/02/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" class="title">我的第一篇文章</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-09-01T17:35:33.000Z" itemprop="datePublished">2025-09-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2025/09/02/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-09-01T17:32:47.156Z" itemprop="datePublished">2025-09-02</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-git配置托管平台" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git配置托管平台
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" class="article-date">
+	  <time datetime="2025-09-02T16:06:26.000Z" itemprop="datePublished">2025-09-03</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/git/" rel="tag">git</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>配置git的远程仓库，常用ssh的方式，这样安全又便捷，省去输入密码的过程</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="一、检查是否已安装-Git"><a href="#一、检查是否已安装-Git" class="headerlink" title="一、检查是否已安装 Git"></a>一、检查是否已安装 Git</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>如果没有安装，可以去 <a target="_blank" rel="noopener" href="https://git-scm.com/?utm_source=chatgpt.com">Git 官网</a> 下载并安装。</p>
+<hr>
+<h3 id="二、生成-SSH-Key"><a href="#二、生成-SSH-Key" class="headerlink" title="二、生成 SSH Key"></a>二、生成 SSH Key</h3><ol>
+<li><p>打开终端(cmd)，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;注释内容&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不支持 <code>ed25519</code>，可以用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;比如gitee ssh key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以指定文件夹路径：-f ~&#x2F;.ssh&#x2F;gitee&#x2F;id_ed25519</p>
+</li>
+<li><p>系统会提示保存路径，建议：</p>
+<ul>
+<li>GitHub 用：<code>~/.ssh/id_rsa_github</code></li>
+<li>Gitee 用：<code>~/.ssh/id_rsa_gitee</code><br> 这样可以区分不同平台。<br> 按提示一路回车，或自己设置密码。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>这个生成的命令在,C:\Users\用户\.ssh ,可以创建文件夹存放不同ssh的key</p>
+</blockquote>
+<hr>
+<h3 id="三、配置-SSH"><a href="#三、配置-SSH" class="headerlink" title="三、配置 SSH"></a>三、配置 SSH</h3><p>编辑 SSH 配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config</span><br></pre></td></tr></table></figure>
+
+<p>写入以下内容（没有 <code>config</code> 文件就新建一个）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># GitHub</span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/github/id_rsa_github</span><br><span class="line"></span><br><span class="line"># Gitee</span><br><span class="line">Host gitee.com</span><br><span class="line">  HostName gitee.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/gitee/id_rsa_gitee</span><br></pre></td></tr></table></figure>
+
+<p>保存退出。这样就能让 SSH 根据不同域名使用不同的 key。</p>
+<hr>
+<h2 id="四、添加公钥到-GitHub-和-Gitee"><a href="#四、添加公钥到-GitHub-和-Gitee" class="headerlink" title="四、添加公钥到 GitHub 和 Gitee"></a>四、添加公钥到 GitHub 和 Gitee</h2><ol>
+<li><p>查看公钥内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa_github.pub</span><br><span class="line">cat ~/.ssh/id_rsa_gitee.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制后，分别到：</p>
+<ul>
+<li><strong>GitHub</strong> → <code>Settings</code> → <code>SSH and GPG keys</code> → <code>New SSH key</code></li>
+<li><strong>Gitee</strong> → <code>设置</code> → <code>SSH公钥</code> → <code>添加公钥</code></li>
+</ul>
+</li>
+</ol>
+<p>粘贴进去保存。</p>
+<hr>
+<h2 id="五、测试连接"><a href="#五、测试连接" class="headerlink" title="五、测试连接"></a>五、测试连接</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">ssh -T git@gitee.com</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会提示：</p>
+<ul>
+<li>GitHub: <code>Hi username! You&#39;ve successfully authenticated</code></li>
+<li>Gitee: <code>Welcome to Gitee.com</code></li>
+</ul>
+<hr>
+<h2 id="六、配置本地仓库同时推送到-GitHub-和-Gitee"><a href="#六、配置本地仓库同时推送到-GitHub-和-Gitee" class="headerlink" title="六、配置本地仓库同时推送到 GitHub 和 Gitee"></a>六、配置本地仓库同时推送到 GitHub 和 Gitee</h2><p>进入你的项目目录，添加远程仓库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 添加 GitHub 远程</span><br><span class="line">git remote add github git@github.com:username/repo.git</span><br><span class="line"></span><br><span class="line"># 添加 Gitee 远程</span><br><span class="line">git remote add gitee git@gitee.com:username/repo.git</span><br></pre></td></tr></table></figure>
+
+<p>查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>结果应该能看到两个 remote。</p>
+<hr>
+<h2 id="七、推送代码到两个仓库"><a href="#七、推送代码到两个仓库" class="headerlink" title="七、推送代码到两个仓库"></a>七、推送代码到两个仓库</h2><h3 id="方法1：分别推送"><a href="#方法1：分别推送" class="headerlink" title="方法1：分别推送"></a>方法1：分别推送</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push github main</span><br><span class="line">git push gitee main</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法2：一个命令推送到多个仓库"><a href="#方法2：一个命令推送到多个仓库" class="headerlink" title="方法2：一个命令推送到多个仓库"></a>方法2：一个命令推送到多个仓库</h3><p>修改 <code>.git/config</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;all&quot;]</span><br><span class="line">    url = git@github.com:username/repo.git</span><br><span class="line">    url = git@gitee.com:username/repo.git</span><br><span class="line">    fetch = +refs/heads/*:refs/remotes/all/*</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push all main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>✅ 至此，你已经完成了 Git 配置 SSH 到 Gitee 和 GitHub 的全流程。</p>
+<h2 id="修改远程仓库"><a href="#修改远程仓库" class="headerlink" title="修改远程仓库"></a>修改远程仓库</h2><h3 id="1-查看当前远程仓库"><a href="#1-查看当前远程仓库" class="headerlink" title="1. 查看当前远程仓库"></a>1. 查看当前远程仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>你会看到类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">origin  git@gitee.com:QGS_Code/storage.git (fetch)</span><br><span class="line">origin  git@gitee.com:QGS_Code/storage.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>说明 <code>origin</code> 已经指向了 <strong>Gitee</strong>。</p>
+<hr>
+<h3 id="2-解决方法"><a href="#2-解决方法" class="headerlink" title="2. 解决方法"></a>2. 解决方法</h3><h4 id="方法-A：修改已有的-origin"><a href="#方法-A：修改已有的-origin" class="headerlink" title="方法 A：修改已有的 origin"></a>方法 A：修改已有的 <code>origin</code></h4><p>如果你希望 <code>origin</code> 代表 GitHub，可以直接修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin git@github.com:CodeQiu88/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后再添加 Gitee 作为另一个远程，比如叫 <code>gitee</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add gitee git@gitee.com:QGS_Code/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>这样：</p>
+<ul>
+<li><code>origin</code> → GitHub</li>
+<li><code>gitee</code> → Gitee</li>
+</ul>
+<p>推送时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin main</span><br><span class="line">git push gitee main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="方法-B：保留-origin-给-Gitee，新加-GitHub"><a href="#方法-B：保留-origin-给-Gitee，新加-GitHub" class="headerlink" title="方法 B：保留 origin 给 Gitee，新加 GitHub"></a>方法 B：保留 <code>origin</code> 给 Gitee，新加 GitHub</h4><p>如果你想 <code>origin</code> 还是 Gitee 的，就给 GitHub 起一个别名，比如 <code>github</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add github git@github.com:CodeQiu88/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后推送：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin main   # 推送到 Gitee</span><br><span class="line">git push github main   # 推送到 GitHub</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="方法-C：一个命令推送到两个远程"><a href="#方法-C：一个命令推送到两个远程" class="headerlink" title="方法 C：一个命令推送到两个远程"></a>方法 C：一个命令推送到两个远程</h4><p>修改 <code>.git/config</code>，加一个 <code>remote &quot;all&quot;</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;all&quot;]</span><br><span class="line">    url = git@github.com:CodeQiu88/storage.git</span><br><span class="line">    url = git@gitee.com:QGS_Code/storage.git</span><br></pre></td></tr></table></figure>
+
+<p>然后你就可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push all main</span><br></pre></td></tr></table></figure>
+
+<p>一次性推送到 GitHub 和 Gitee。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2025/09/03/git%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0/" title="git配置托管平台" target="_blank" rel="external">http://example.com/2025/09/03/git配置托管平台/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web Developer &amp; Designer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2025/09/02/ssh/" title="ssh"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
